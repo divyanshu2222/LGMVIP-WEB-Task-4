@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My-Calculator</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Nunito|Nunito+Sans&display=swap');
+        *{
+            margin: 0;
+            padding: 0;
+            outline: 0;
+            font-family: 'Nunito', sans-serif;
+        }
+
+        .container{
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%,-50%);
+            background-color: #fafafa;
+            box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.4);
+            border-radius: 8px;
+        }
+
+        .result{
+            background-color: #212121;
+            color: #fafafa;
+            border-radius: 8px 8px 0 0;
+            padding: 20px;
+            font-size: 2.5rem;
+        }
+
+        .btn{
+            display: grid;
+            grid-template-columns: auto auto auto auto;
+        }
+
+        .btn button{
+            padding: 30px;
+            font-size: 1.5rem;
+            text-align: center;
+            border: none;
+            transition: .2s all linear;
+        }
+        /* .buttons button:hover{
+            background-color: #e0e0e0;
+        } */
+/* 
+        .buttons button:active{
+            background-color: #bdbdbd;
+        } */
+        .equal{
+            background-color: #f57f17;
+        }
+        .equal:hover{
+            background-color: #b95e0e;
+            cursor: pointer;
+        }
+        .equal:active{
+            background-color: #f57f17;
+        }
+
+        .delete{
+            background-color: #e90a0a;
+            color: #fafafa;
+        }
+        .delete:hover{
+            background-color: #a70b0b;
+            color: #fafafa;
+            cursor: pointer;
+        }
+
+        .numbers:hover{
+            background-color: #e0e0e0;
+            cursor: pointer;
+        }
+        .numbers:active{
+            background-color: #bdbdbd;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="result">
+            <p id="result">0</p>
+        </div>
+        <div class="btn">
+            <button class="numbers">+/-</button>
+            <button class="numbers">%</button>
+            <button class="numbers">C</button>
+            <button class="delete">DEL</button>
+
+            <button class="numbers">7</button>
+            <button class="numbers">8</button>
+            <button class="numbers">9</button>
+            <button class="numbers">/</button>
+
+            <button class="numbers">4</button>
+            <button class="numbers">5</button>
+            <button class="numbers">6</button>
+            <button class="numbers">*</button>
+
+            <button class="numbers">1</button>
+            <button class="numbers">2</button>
+            <button class="numbers">3</button>
+            <button class="numbers">+</button>
+
+            <button class="numbers">.</button>
+            <button class="numbers">0</button>
+            <button class="equal">=</button>
+            <button class="numbers">-</button>
+            
+        </div>
+    </div>
+
+    <script>
+        function getInputValue(){
+            let input = event.target.innerText;
+            console.log(input)
+            printValue(input);
+        }
+
+        function printValue(val){
+            let out = document.querySelector('#result');
+            let current = out.innerHTML;
+
+            if(out.innerHTML == "0"){
+                if(val !="C" && val !="DEL"){
+                    out.innerHTML ="";
+                    out.innerHTML += val;
+                }
+            }else{
+                if(val == "DEL"){
+                    out.innerHTML = current.slice(0, -1);           //It remove the part of the string
+                    if(out.innerHTML.length <= 1){
+                        out.innerHTML = "0";
+                    }
+                }
+
+                if(val != "C" && val != "DEL" && val !="="){
+                    out.innerHTML += val;
+                }
+
+                if(val == "C"){
+                    out.innerHTML = "0";
+                }
+
+                // Calculator Operations
+                if(val == "="){
+                    let res = out.innerHTML;
+                    out.innerHTML = eval(res);
+                }
+            }
+        }
+        let btns = document.getElementsByTagName('button');
+        for(var i = 0; i<btns.length; i++){
+            btns[i].setAttribute('onclick', 'getInputValue()');
+        }
+    </script>
+</body>
+</html>
